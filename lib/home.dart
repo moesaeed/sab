@@ -9,6 +9,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SABBaseTheme theme = SABBaseTheme.of(context);
+    final ThemeData baseTheme = Theme.of(context);
     List<ListItem> items = allData;
     int isDrawEventTitle = -1;
 
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
             final ListItem item = items[index];
 
             if (item is News) {
-              return _newsWithImage(item, theme);
+              return _newsWithImage(item, theme, baseTheme);
             } else if (item is Events) {
               isDrawEventTitle++;
               return _event(item, theme, (isDrawEventTitle == 0),
@@ -39,7 +40,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column _newsWithImage(News item, SABBaseTheme theme) {
+  Column _newsWithImage(News item, SABBaseTheme theme, ThemeData baseTheme) {
     bool showImage = (item.imageUrl == null || item.imageUrl.trim() == "");
 
     return Column(
@@ -72,7 +73,8 @@ class Home extends StatelessWidget {
         showImage
             ? Text(
                 item.description,
-                style: theme.newsDescStyle,
+                //style: theme.newsDescStyle,
+                style: baseTheme.textTheme.caption,
               )
             : Container(),
         Row(
@@ -81,7 +83,7 @@ class Home extends StatelessWidget {
           children: <Widget>[
             Text(
               item.date,
-              style: theme.newsDateStyle,
+              style: baseTheme.textTheme.caption,
             ),
             Icon(
               Icons.bookmark_border,

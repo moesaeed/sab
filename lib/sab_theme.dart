@@ -83,8 +83,10 @@ AppThemeData BuildLightTheme() {
         brightness: Brightness.light,
         primaryColor: Colors.white,
         primaryColorBrightness: Brightness.light,
-        primaryTextTheme: _buildSABTextTheme(base.textTheme),
+        primaryTextTheme: base.textTheme,
         primaryIconTheme: base.iconTheme.copyWith(color: Colors.black),
+        scaffoldBackgroundColor: Colors.white,
+        //accentTextTheme:
       ));
 }
 
@@ -94,11 +96,32 @@ AppThemeData BuildDarkTheme() {
   return AppThemeData(
       AppTheme.Dark,
       base.copyWith(
-        //brightness: Brightness.dark,
-        primaryTextTheme: _buildSABTextTheme(base.primaryTextTheme),
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        canvasColor: Colors.black,
+        dividerColor: Colors.grey,
       ));
 }
 
 TextTheme _buildSABTextTheme(TextTheme base) {
   return base.copyWith().apply();
+}
+
+class PestoStyle extends TextStyle {
+  const PestoStyle({
+    double fontSize = 12.0,
+    FontWeight fontWeight,
+    Color color = Colors.black87,
+    double letterSpacing,
+    double height,
+  }) : super(
+          inherit: false,
+          color: color,
+          fontFamily: 'Raleway',
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          textBaseline: TextBaseline.alphabetic,
+          letterSpacing: letterSpacing,
+          height: height,
+        );
 }

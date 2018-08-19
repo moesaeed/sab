@@ -23,7 +23,6 @@ flutter:
   uses-material-design: true
   assets:
     - resources/
-    - resources/logo.jpg
   fonts:
     - family: kufi
       fonts:

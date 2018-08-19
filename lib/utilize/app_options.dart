@@ -24,7 +24,7 @@ class DynamicTheme extends StatefulWidget {
 class DynamicThemeState extends State<DynamicTheme> {
   ThemeData _data;
   Locale _locale;
-  static const String _sharedThemePreferencesKey = "light";
+  //static const String _sharedThemePreferencesKey = "light";
 
   static const String _sharedUserPreferencesKey = "SUPK";
   List<String> _defaultPreferences = [
@@ -67,9 +67,9 @@ class DynamicThemeState extends State<DynamicTheme> {
         _defaultPreferences;
   }
 
-  Future<String> loadTheme() async {
-    return (Prefs.getStringF(_sharedThemePreferencesKey) ?? "Light");
-  }
+//  Future<String> loadTheme() async {
+//    return (Prefs.getStringF(_sharedThemePreferencesKey) ?? "Light");
+//  }
 
   void changeThemeData({AppTheme theme}) async {
     if (theme != null) {

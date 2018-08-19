@@ -10,9 +10,9 @@ class CustomDrawer extends StatelessWidget {
         child: new ListView(
       children: <Widget>[
         new DrawerHeader(
-          padding: new EdgeInsets.all(0.0),
+          padding: new EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 5.0),
           child: new Center(
-            child: Image.asset("resources/logo.jpg"),
+            child: Image.asset("resources/logo.png"),
           ),
         ),
         new ListTile(
