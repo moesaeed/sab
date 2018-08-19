@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sab/home.dart';
-import 'package:sab/scope_model_wrapper.dart';
 import 'package:sab/translations_delegate_base.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:sab/utilize/app_options.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -35,15 +34,31 @@ class CustomDrawer extends StatelessWidget {
           },
         ),
         new Divider(),
-        ScopedModelDescendant<AppModel>(
-            builder: (context, child, model) => ListTile(
-                  leading: new Icon(Icons.language),
-                  title: new Text(TranslationBase.of(context).language),
-                  onTap: () {
-                    Navigator.pop(context);
-                    model.changeDirection();
-                  },
-                )),
+        ListTile(
+          leading: new Icon(Icons.language),
+          title: new Text(TranslationBase.of(context).language),
+          onTap: () {
+            Navigator.pop(context);
+            DynamicTheme.of(context).changeLocale();
+          },
+        ),
+        new Divider(),
+        ListTile(
+          leading: new Icon(Icons.brightness_low),
+          title: new Text(TranslationBase.of(context).light),
+          onTap: () {
+            Navigator.pop(context);
+            DynamicTheme.of(context).changeThemeData(theme: AppTheme.Light);
+          },
+        ),
+        ListTile(
+          leading: new Icon(Icons.brightness_high),
+          title: new Text(TranslationBase.of(context).dark),
+          onTap: () {
+            Navigator.pop(context);
+            DynamicTheme.of(context).changeThemeData(theme: AppTheme.Dark);
+          },
+        ),
       ],
     ));
   }

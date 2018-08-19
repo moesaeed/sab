@@ -18,14 +18,18 @@ class TranslationBase {
       'subTitle': 'About',
       'language': 'العربية',
       'urgent': 'Urgent',
-      'events': 'Events'
+      'events': 'Events',
+      'light': 'Light',
+      'dark': 'Dark',
     },
     'ar': {
       'title': 'الرئيسية',
       'subTitle': 'عن الديوان',
       'language': 'English',
       'urgent': 'عاجل',
-      'events': "الفعاليات"
+      'events': "الفعاليات",
+      'light': 'فاتح',
+      'dark': 'غامق',
     },
   };
 
@@ -47,6 +51,14 @@ class TranslationBase {
 
   String get events {
     return _localizedValues[locale.languageCode]['events'];
+  }
+
+  String get dark {
+    return _localizedValues[locale.languageCode]['dark'];
+  }
+
+  String get light {
+    return _localizedValues[locale.languageCode]['light'];
   }
 }
 

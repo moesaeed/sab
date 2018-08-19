@@ -15,11 +15,7 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: theme.appBarBackgroundColor,
-        brightness: Brightness.light,
-        title: Text(TranslationBase.of(context).home,
-            style: theme.appBarTitleStyle),
+        title: Text(TranslationBase.of(context).home),
         centerTitle: true,
       ),
       drawer: CustomDrawer(),
@@ -72,7 +68,6 @@ class Home extends StatelessWidget {
         ),
         Text(
           item.title,
-          style: theme.newsTitleStyle,
         ),
         showImage
             ? Text(
@@ -90,7 +85,6 @@ class Home extends StatelessWidget {
             ),
             Icon(
               Icons.bookmark_border,
-              color: Colors.black38,
             ),
           ],
         ),

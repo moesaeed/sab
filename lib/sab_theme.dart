@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sab/utilize/app_options.dart';
 
 const scaffoldBackground = Colors.white;
 const urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
@@ -73,3 +74,31 @@ class SABBaseTheme extends InheritedWidget {
 //************Building The Theme****************//
 //****************************//
 //****************************//
+AppThemeData BuildLightTheme() {
+  final ThemeData base =
+      ThemeData(brightness: Brightness.light, fontFamily: 'kufi');
+  return AppThemeData(
+      AppTheme.Light,
+      base.copyWith(
+        brightness: Brightness.light,
+        primaryColor: Colors.white,
+        primaryColorBrightness: Brightness.light,
+        primaryTextTheme: _buildSABTextTheme(base.textTheme),
+        primaryIconTheme: base.iconTheme.copyWith(color: Colors.black),
+      ));
+}
+
+AppThemeData BuildDarkTheme() {
+  final ThemeData base =
+      ThemeData(brightness: Brightness.dark, fontFamily: 'kufi');
+  return AppThemeData(
+      AppTheme.Dark,
+      base.copyWith(
+        //brightness: Brightness.dark,
+        primaryTextTheme: _buildSABTextTheme(base.primaryTextTheme),
+      ));
+}
+
+TextTheme _buildSABTextTheme(TextTheme base) {
+  return base.copyWith().apply();
+}
