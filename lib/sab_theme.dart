@@ -59,7 +59,7 @@ class SABBaseTheme extends InheritedWidget {
       kufiBlack14(Color.fromRGBO(102, 102, 102, 1.0));
   final TextStyle newsDateStyle =
       kufiBlack14(Color.fromRGBO(147, 148, 149, 1.0));
-  final TextStyle newsUrgentStyle = kufiBlack14(Colors.white);
+  final TextStyle newsUrgentStyle = kufiBlack14(Colors.black);
   final TextStyle newsCategoryTitleStyle = kufiBlack24(Colors.black);
 
   static SABBaseTheme of(BuildContext context) =>

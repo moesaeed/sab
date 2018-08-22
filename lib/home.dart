@@ -4,12 +4,14 @@ import 'package:sab/sab_data.dart';
 import 'package:sab/sab_theme.dart';
 import 'package:sab/sab_types.dart';
 import 'package:sab/translations_delegate_base.dart';
+import 'package:sab/utilize/app_options.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SABBaseTheme theme = SABBaseTheme.of(context);
     final ThemeData baseTheme = Theme.of(context);
+    DynamicThemeState th = DynamicTheme.of(context);
     List<ListItem> items = allData;
     int isDrawEventTitle = -1;
 
@@ -28,7 +30,7 @@ class Home extends StatelessWidget {
             final ListItem item = items[index];
 
             if (item is News) {
-              return _newsWithImage(item, theme, baseTheme);
+              return _newsWithImage(item, theme, baseTheme, th);
             } else if (item is Events) {
               isDrawEventTitle++;
               return _event(item, theme, (isDrawEventTitle == 0),
@@ -40,7 +42,8 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column _newsWithImage(News item, SABBaseTheme theme, ThemeData baseTheme) {
+  Column _newsWithImage(News item, SABBaseTheme theme, ThemeData baseTheme,
+      DynamicThemeState dy) {
     bool showImage = (item.imageUrl == null || item.imageUrl.trim() == "");
 
     return Column(
@@ -61,7 +64,8 @@ class Home extends StatelessWidget {
                 child: item.isUrgent
                     ? Text(
                         "عاجل",
-                        style: theme.newsUrgentStyle,
+                        //style: theme.newsUrgentStyle,
+                        //style: dy.newsUrgentStyle,
                       )
                     : Container(),
                 padding: new EdgeInsets.symmetric(horizontal: 10.0)),
@@ -107,6 +111,7 @@ class Home extends StatelessWidget {
       child: FadeInImage.assetNetwork(
         placeholder: "resources/logo.jpg",
         image: imageUrl,
+        alignment: Alignment.topCenter,
         height: double.infinity,
         width: double.infinity,
         fit: BoxFit.cover,

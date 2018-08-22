@@ -6,6 +6,7 @@ import 'package:sab/utilize/app_options.dart';
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final dTheme = DynamicTheme.of(context);
     return new Drawer(
         child: new ListView(
       children: <Widget>[
@@ -39,7 +40,7 @@ class CustomDrawer extends StatelessWidget {
           title: new Text(TranslationBase.of(context).language),
           onTap: () {
             Navigator.pop(context);
-            DynamicTheme.of(context).changeLocale();
+            dTheme.changeLocale();
           },
         ),
         new Divider(),
@@ -48,7 +49,7 @@ class CustomDrawer extends StatelessWidget {
           title: new Text(TranslationBase.of(context).light),
           onTap: () {
             Navigator.pop(context);
-            DynamicTheme.of(context).changeThemeData(theme: AppTheme.Light);
+            dTheme.changeThemeData(theme: AppTheme.Light);
           },
         ),
         ListTile(
@@ -56,7 +57,7 @@ class CustomDrawer extends StatelessWidget {
           title: new Text(TranslationBase.of(context).dark),
           onTap: () {
             Navigator.pop(context);
-            DynamicTheme.of(context).changeThemeData(theme: AppTheme.Dark);
+            dTheme.changeThemeData(theme: AppTheme.Dark);
           },
         ),
       ],

@@ -24,7 +24,6 @@ class DynamicTheme extends StatefulWidget {
 class DynamicThemeState extends State<DynamicTheme> {
   ThemeData _data;
   Locale _locale;
-  //static const String _sharedThemePreferencesKey = "light";
 
   static const String _sharedUserPreferencesKey = "SUPK";
   List<String> _defaultPreferences = [
@@ -63,16 +62,12 @@ class DynamicThemeState extends State<DynamicTheme> {
   }
 
   Future<List<String>> _loadUserPreferences() {
-    return Prefs.getStringListF(_sharedUserPreferencesKey) ??
-        _defaultPreferences;
+    return Prefs.getStringListF(_sharedUserPreferencesKey);
   }
-
-//  Future<String> loadTheme() async {
-//    return (Prefs.getStringF(_sharedThemePreferencesKey) ?? "Light");
-//  }
 
   void changeThemeData({AppTheme theme}) async {
     if (theme != null) {
+      _defaultPreferences[1] = theme.toString();
       await _updateUserPreferences(appTheme: theme);
     } else {
       _loadUserPreferences().then((preferences) {
@@ -121,6 +116,17 @@ class DynamicThemeState extends State<DynamicTheme> {
 
     Prefs.setStringList(_sharedUserPreferencesKey, _defaultPreferences);
   }
+
+  static TextStyle kufiBlack14(Color color) => new SABStyle.kufi(19.0, color);
+  TextStyle get newsUrgentStyle {
+    return _defaultPreferences[1] == AppTheme.Dark.toString()
+        ? kufiBlack14(Colors.white)
+        : kufiBlack14(Colors.black);
+  }
+
+  Color urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
+  final TextStyle newsDescStyle =
+      kufiBlack14(Color.fromRGBO(102, 102, 102, 1.0));
 }
 
 class AppThemeData {
