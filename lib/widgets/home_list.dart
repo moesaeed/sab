@@ -7,10 +7,22 @@ import 'package:sab/widgets/home_event_item.dart';
 import 'package:sab/widgets/home_news_item.dart';
 
 class HomeList extends StatelessWidget {
-  List<ListItem> items = allData;
   int drawEventTitle = -1;
   @override
   Widget build(BuildContext context) {
+    List<ListItem> items;
+    final dTheme = AppOptions.of(context);
+    AppLocale currentLocale = dTheme.currentLocale;
+
+    switch (currentLocale) {
+      case AppLocale.en:
+        items = AllData;
+        break;
+      case AppLocale.ar:
+        items = AllArabicData;
+        break;
+    }
+
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (BuildContext context, int index) {
@@ -46,7 +58,7 @@ class HomeCategoryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dTheme = DynamicTheme.of(context);
+    final dTheme = AppOptions.of(context);
     return Row(
       children: <Widget>[
         SizedBox(

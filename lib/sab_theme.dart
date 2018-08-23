@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sab/utilize/app_options.dart';
 
-AppThemeData BuildLightTheme() {
-  final ThemeData base =
-      ThemeData(brightness: Brightness.light, fontFamily: 'kufi');
+AppThemeData BuildLightTheme(bool arabic) {
+  final ThemeData base = arabic
+      ? ThemeData(brightness: Brightness.light, fontFamily: 'kufi')
+      : ThemeData(brightness: Brightness.light, fontFamily: 'Raleway');
   return AppThemeData(
       AppTheme.Light,
       base.copyWith(
@@ -17,9 +18,11 @@ AppThemeData BuildLightTheme() {
       ));
 }
 
-AppThemeData BuildDarkTheme() {
-  final ThemeData base =
-      ThemeData(brightness: Brightness.dark, fontFamily: 'kufi');
+AppThemeData BuildDarkTheme(bool arabic) {
+  final ThemeData base = arabic
+      ? ThemeData(brightness: Brightness.dark, fontFamily: 'kufi')
+      : ThemeData(brightness: Brightness.dark, fontFamily: 'Raleway');
+
   return AppThemeData(
       AppTheme.Dark,
       base.copyWith(
@@ -37,11 +40,12 @@ class SABTextStyle extends TextStyle {
     Color color = Colors.black,
     double letterSpacing,
     double height,
+    String fontFamily,
   }) : super(
           inherit: false,
           color: color,
           fontSize: fontSize,
-          fontFamily: 'kufi',
+          fontFamily: fontFamily,
           fontWeight: fontWeight,
           textBaseline: TextBaseline.alphabetic,
           letterSpacing: letterSpacing,

@@ -8,22 +8,26 @@ import 'package:sab/utilize/prefs.dart';
 typedef Widget ThemedWidgetBuilder(
     BuildContext context, ThemeData data, Locale locale);
 
-class DynamicTheme extends StatefulWidget {
+class AppOptions extends StatefulWidget {
   final ThemedWidgetBuilder themedWidgetBuilder;
 
-  const DynamicTheme({Key key, this.themedWidgetBuilder}) : super(key: key);
+  const AppOptions({Key key, this.themedWidgetBuilder}) : super(key: key);
 
   @override
-  DynamicThemeState createState() => new DynamicThemeState();
+  AppOptionsState createState() => new AppOptionsState();
 
-  static DynamicThemeState of(BuildContext context) {
-    return context.ancestorStateOfType(const TypeMatcher<DynamicThemeState>());
+  static AppOptionsState of(BuildContext context) {
+    return context.ancestorStateOfType(const TypeMatcher<AppOptionsState>());
   }
 }
 
-class DynamicThemeState extends State<DynamicTheme> {
+class AppOptionsState extends State<AppOptions> {
   ThemeData _data;
   Locale _locale;
+
+  AppLocale get currentLocale {
+    return _locale == Locale("en") ? AppLocale.en : AppLocale.ar;
+  }
 
   static const String _sharedUserPreferencesKey = "SUPK";
   List<String> _defaultPreferences = [
@@ -44,26 +48,31 @@ class DynamicThemeState extends State<DynamicTheme> {
 
     _loadUserPreferences().then((preferences) {
       preferences = preferences[0].isEmpty ? _defaultPreferences : preferences;
+      bool isArabic = preferences[0] == AppLocale.ar.toString();
       setState(() {
         if (preferences[1] == AppTheme.Dark.toString()) {
-          _data = BuildDarkTheme().data;
+          _data = preferences[0] == AppLocale.ar.toString()
+              ? BuildDarkTheme(true).data
+              : BuildDarkTheme(false).data;
           _defaultPreferences[1] = AppTheme.Dark.toString();
         } else {
-          _data = BuildLightTheme().data;
+          _data = preferences[0] == AppLocale.ar.toString()
+              ? BuildLightTheme(true).data
+              : BuildLightTheme(false).data;
           _defaultPreferences[1] = AppTheme.Light.toString();
         }
 
-        if (preferences[0] == AppLocale.ar.toString()) {
+        if (isArabic) {
           _locale = Locale("ar");
           _defaultPreferences[0] = AppLocale.ar.toString();
         } else {
           _locale = Locale("en");
           _defaultPreferences[0] = AppLocale.en.toString();
         }
+
+        _setTextStyle(isArabic);
       });
     });
-
-    _setTextStyle();
   }
 
   @override
@@ -109,23 +118,31 @@ class DynamicThemeState extends State<DynamicTheme> {
   }
 
   Future _updateUserPreferences({AppTheme appTheme, AppLocale locale}) async {
-    if (appTheme != null) {
-      _defaultPreferences[1] = appTheme.toString();
-      setState(() {
-        this._data = appTheme == AppTheme.Dark
-            ? BuildDarkTheme().data
-            : BuildLightTheme().data;
-      });
-    }
     if (locale != null) {
       _defaultPreferences[0] = locale.toString();
-      setState(() {
-        this._locale = locale == AppLocale.ar ? Locale("ar") : Locale("en");
-      });
     }
 
+    if (appTheme != null) {
+      _defaultPreferences[1] = appTheme.toString();
+    }
+    bool isArabic = _defaultPreferences[0] == AppLocale.ar.toString();
+    setState(() {
+      if (locale != null) {
+        this._locale = locale == AppLocale.ar ? Locale("ar") : Locale("en");
+      }
+      if (isArabic) {
+        this._data = _defaultPreferences[1] == AppTheme.Dark.toString()
+            ? BuildDarkTheme(true).data
+            : BuildLightTheme(true).data;
+      } else {
+        this._data = _defaultPreferences[1] == AppTheme.Dark.toString()
+            ? BuildDarkTheme(false).data
+            : BuildLightTheme(false).data;
+      }
+    });
+
     Prefs.setStringList(_sharedUserPreferencesKey, _defaultPreferences);
-    _setTextStyle();
+    _setTextStyle(isArabic);
   }
 
   final Color urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
@@ -136,25 +153,32 @@ class DynamicThemeState extends State<DynamicTheme> {
   TextStyle newsUrgentStyle;
   TextStyle newsCategoryTitleStyle;
 
-  void _setTextStyle() {
-    newsDateStyle = SABTextStyle(color: Color.fromRGBO(147, 148, 149, 1.0));
+  void _setTextStyle(bool isArabic) {
+    String fontFamily = isArabic ? "kufi" : "Raleway";
+    newsDateStyle = SABTextStyle(
+        color: Color.fromRGBO(147, 148, 149, 1.0), fontFamily: fontFamily);
 
-    newsSourceStyle = SABTextStyle(color: Color.fromRGBO(240, 59, 59, 1.0));
+    newsSourceStyle = SABTextStyle(
+        color: Color.fromRGBO(240, 59, 59, 1.0), fontFamily: fontFamily);
 
     newsUrgentStyle = SABTextStyle(
         fontSize: 15.0,
         color: _defaultPreferences[1] == AppTheme.Dark.toString()
             ? Colors.black
-            : Colors.white);
+            : Colors.white,
+        fontFamily: fontFamily);
 
-    newsDescStyle =
-        SABTextStyle(fontSize: 13.0, color: Color.fromRGBO(102, 102, 102, 1.0));
+    newsDescStyle = SABTextStyle(
+        fontSize: 13.0,
+        color: Color.fromRGBO(102, 102, 102, 1.0),
+        fontFamily: fontFamily);
 
     newsCategoryTitleStyle = SABTextStyle(
         fontSize: 24.0,
         color: _defaultPreferences[1] == AppTheme.Dark.toString()
             ? Colors.white
-            : Colors.black);
+            : Colors.black,
+        fontFamily: fontFamily);
   }
 }
 

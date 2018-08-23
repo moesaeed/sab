@@ -26,4 +26,11 @@ flutter:
   fonts:
     - family: kufi
       fonts:
-        - asset: resources/kufi.ttf
+        - asset: resources/fonts/kufi/kufi.ttf
+    - family: Raleway
+      fonts:
+        - asset: resources/fonts/raleway/Raleway-Regular.ttf
+        - asset: resources/fonts/raleway/Raleway-Medium.ttf
+          weight: 500
+        - asset: resources/fonts/raleway/Raleway-SemiBold.ttf
+          weight: 600

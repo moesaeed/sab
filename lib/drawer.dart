@@ -6,7 +6,7 @@ import 'package:sab/utilize/app_options.dart';
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final dTheme = DynamicTheme.of(context);
+    final dTheme = AppOptions.of(context);
     return new Drawer(
         child: new ListView(
       children: <Widget>[

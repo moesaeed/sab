@@ -11,7 +11,7 @@ class HomeEventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dTheme = DynamicTheme.of(context);
+    final dTheme = AppOptions.of(context);
     bool showImage = (item.imageUrl == null || item.imageUrl.trim() == "");
     return Column(
       children: <Widget>[

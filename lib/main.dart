@@ -9,7 +9,7 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DynamicTheme(themedWidgetBuilder: (context, theme, locale) {
+    return AppOptions(themedWidgetBuilder: (context, theme, locale) {
       return MaterialApp(
         locale: locale,
         localizationsDelegates: [
