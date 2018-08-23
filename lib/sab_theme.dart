@@ -107,18 +107,18 @@ TextTheme _buildSABTextTheme(TextTheme base) {
   return base.copyWith().apply();
 }
 
-class PestoStyle extends TextStyle {
-  const PestoStyle({
+class SABTextStyle extends TextStyle {
+  const SABTextStyle({
     double fontSize = 12.0,
     FontWeight fontWeight,
-    Color color = Colors.black87,
+    Color color = Colors.black,
     double letterSpacing,
     double height,
   }) : super(
           inherit: false,
           color: color,
-          fontFamily: 'Raleway',
           fontSize: fontSize,
+          fontFamily: 'kufi',
           fontWeight: fontWeight,
           textBaseline: TextBaseline.alphabetic,
           letterSpacing: letterSpacing,

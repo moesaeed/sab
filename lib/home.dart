@@ -5,6 +5,7 @@ import 'package:sab/sab_theme.dart';
 import 'package:sab/sab_types.dart';
 import 'package:sab/translations_delegate_base.dart';
 import 'package:sab/utilize/app_options.dart';
+import 'package:sab/widgets/home_list.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -24,20 +25,21 @@ class Home extends StatelessWidget {
       drawer: CustomDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            final ListItem item = items[index];
-
-            if (item is News) {
-              return _newsWithImage(item, theme, baseTheme, th);
-            } else if (item is Events) {
-              isDrawEventTitle++;
-              return _event(item, theme, (isDrawEventTitle == 0),
-                  TranslationBase.of(context).events);
-            }
-          },
-        ),
+        child: HomeList(),
+//        ListView.builder(
+//          itemCount: items.length,
+//          itemBuilder: (BuildContext context, int index) {
+//            final ListItem item = items[index];
+//
+//            if (item is News) {
+//              return _newsWithImage(item, theme, baseTheme, th);
+//            } else if (item is Events) {
+//              isDrawEventTitle++;
+//              return _event(item, theme, (isDrawEventTitle == 0),
+//                  TranslationBase.of(context).events);
+//            }
+//          },
+//        ),
       ),
     );
   }

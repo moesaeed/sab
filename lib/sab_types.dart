@@ -5,7 +5,8 @@ class News implements ListItem {
       this.imageUrl,
       this.date,
       this.source,
-      this.isUrgent});
+      this.isUrgent,
+      this.iD});
 
   final String title;
   final String description;
@@ -13,6 +14,7 @@ class News implements ListItem {
   final String date;
   final String source;
   final bool isUrgent;
+  final int iD;
 
   @override
   String toString() => 'Vendor($title)';

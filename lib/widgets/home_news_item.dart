@@ -3,51 +3,72 @@ import 'package:sab/sab_types.dart';
 import 'package:sab/utilize/app_options.dart';
 
 class HomeNewsItem extends StatelessWidget {
-  HomeNewsItem({Key key, @required this.newsItem})
-      : assert(newsItem != null),
+  HomeNewsItem({Key key, @required this.item})
+      : assert(item != null),
         super(key: key);
 
-  final News newsItem;
-  static const urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
+  final News item;
 
   @override
   Widget build(BuildContext context) {
     final dTheme = DynamicTheme.of(context);
-    bool showImage =
-        (newsItem.imageUrl == null || newsItem.imageUrl.trim() == "");
+    bool showImage = (item.imageUrl == null || item.imageUrl.trim() == "");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        _newsImage(imageUrl: newsItem.imageUrl),
+        showImage
+            ? Container()
+            : Hero(
+                tag: item.iD,
+                child: Container(
+                  height: 180.0,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: "resources/logo.jpg",
+                    image: item.imageUrl,
+                    alignment: Alignment.topCenter,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
         showImage ? Container() : SizedBox(height: 10.0),
         Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              newsItem.source,
-              //style: theme.newsSourceStyle,
+              item.source,
+              style: dTheme.newsSourceStyle,
             ),
             new Container(
                 color: dTheme.urgentBG,
-                child: newsItem.isUrgent
+                child: item.isUrgent
                     ? Text(
                         "عاجل",
-                        //style: theme.newsUrgentStyle,
-                        //style: dy.newsUrgentStyle,
+                        style: dTheme.newsUrgentStyle,
                       )
                     : Container(),
                 padding: new EdgeInsets.symmetric(horizontal: 10.0)),
           ],
         ),
-        Text(
-          newsItem.title,
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewsDetails(item: item),
+              ),
+            );
+          },
+          child: Text(
+            item.title,
+          ),
         ),
         showImage
             ? Text(
-                newsItem.description,
-                //style: theme.newsDescStyle,
-                //style: baseTheme.textTheme.caption,
+                item.description,
+                style: dTheme.newsDescStyle,
               )
             : Container(),
         Row(
@@ -55,8 +76,8 @@ class HomeNewsItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              newsItem.date,
-              //style: baseTheme.textTheme.caption,
+              item.date,
+              style: dTheme.newsDateStyle,
             ),
             Icon(
               Icons.bookmark_border,
@@ -71,24 +92,96 @@ class HomeNewsItem extends StatelessWidget {
   }
 }
 
-class _newsImage extends StatelessWidget {
-  _newsImage({Key key, this.imageUrl}) : super(key: key);
-  final String imageUrl;
+class NewsDetails extends StatelessWidget {
+  NewsDetails({Key key, @required this.item})
+      : assert(item != null),
+        super(key: key);
+
+  final News item;
 
   @override
   Widget build(BuildContext context) {
-    return imageUrl == null || imageUrl.isEmpty
-        ? Container()
-        : Container(
-            height: 180.0,
-            child: FadeInImage.assetNetwork(
-              placeholder: "resources/logo.jpg",
-              image: imageUrl,
-              alignment: Alignment.topCenter,
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
+    final dTheme = DynamicTheme.of(context);
+    bool showImage = (item.imageUrl == null || item.imageUrl.trim() == "");
+    return Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                showImage
+                    ? Container()
+                    : Hero(
+                        tag: item.iD,
+                        child: Container(
+                          height: 250.0,
+                          child: FadeInImage.assetNetwork(
+                            placeholder: "resources/logo.jpg",
+                            image: item.imageUrl,
+                            alignment: Alignment.topCenter,
+                            height: double.infinity,
+                            width: double.infinity,
+                            //fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                showImage ? Container() : SizedBox(height: 10.0),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      item.source,
+                      style: dTheme.newsSourceStyle,
+                    ),
+                    new Container(
+                        color: dTheme.urgentBG,
+                        child: item.isUrgent
+                            ? Text(
+                                "عاجل",
+                                style: dTheme.newsUrgentStyle,
+                              )
+                            : Container(),
+                        padding: new EdgeInsets.symmetric(horizontal: 10.0)),
+                  ],
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewsDetails(item: item),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    item.title,
+                  ),
+                ),
+                Text(
+                  item.description,
+                  style: dTheme.newsDescStyle,
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      item.date,
+                      style: dTheme.newsDateStyle,
+                    ),
+                    Icon(
+                      Icons.bookmark_border,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.0),
+              ],
             ),
-          );
+          ),
+        ));
   }
 }

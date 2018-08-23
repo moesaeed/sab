@@ -45,15 +45,25 @@ class DynamicThemeState extends State<DynamicTheme> {
     _loadUserPreferences().then((preferences) {
       preferences = preferences[0].isEmpty ? _defaultPreferences : preferences;
       setState(() {
-        _data = preferences[1] == AppTheme.Dark.toString()
-            ? BuildDarkTheme().data
-            : BuildLightTheme().data;
+        if (preferences[1] == AppTheme.Dark.toString()) {
+          _data = BuildDarkTheme().data;
+          _defaultPreferences[1] = AppTheme.Dark.toString();
+        } else {
+          _data = BuildLightTheme().data;
+          _defaultPreferences[1] = AppTheme.Light.toString();
+        }
 
-        _locale = preferences[0] == AppLocale.ar.toString()
-            ? Locale("ar")
-            : Locale("en");
+        if (preferences[0] == AppLocale.ar.toString()) {
+          _locale = Locale("ar");
+          _defaultPreferences[0] = AppLocale.ar.toString();
+        } else {
+          _locale = Locale("en");
+          _defaultPreferences[0] = AppLocale.en.toString();
+        }
       });
     });
+
+    _setTextStyle();
   }
 
   @override
@@ -115,18 +125,39 @@ class DynamicThemeState extends State<DynamicTheme> {
     }
 
     Prefs.setStringList(_sharedUserPreferencesKey, _defaultPreferences);
+    _setTextStyle();
   }
 
   static TextStyle kufiBlack14(Color color) => new SABStyle.kufi(19.0, color);
-  TextStyle get newsUrgentStyle {
-    return _defaultPreferences[1] == AppTheme.Dark.toString()
-        ? kufiBlack14(Colors.white)
-        : kufiBlack14(Colors.black);
-  }
 
-  Color urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
-  final TextStyle newsDescStyle =
-      kufiBlack14(Color.fromRGBO(102, 102, 102, 1.0));
+  final Color urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
+
+  TextStyle newsDescStyle;
+  TextStyle newsDateStyle;
+  TextStyle newsSourceStyle;
+  TextStyle newsUrgentStyle;
+  TextStyle newsCategoryTitleStyle;
+
+  void _setTextStyle() {
+    newsDateStyle = SABTextStyle(color: Color.fromRGBO(147, 148, 149, 1.0));
+
+    newsSourceStyle = SABTextStyle(color: Color.fromRGBO(240, 59, 59, 1.0));
+
+    newsUrgentStyle = SABTextStyle(
+        fontSize: 15.0,
+        color: _defaultPreferences[1] == AppTheme.Dark.toString()
+            ? Colors.black
+            : Colors.white);
+
+    newsDescStyle =
+        SABTextStyle(fontSize: 13.0, color: Color.fromRGBO(102, 102, 102, 1.0));
+
+    newsCategoryTitleStyle = SABTextStyle(
+        fontSize: 24.0,
+        color: _defaultPreferences[1] == AppTheme.Dark.toString()
+            ? Colors.white
+            : Colors.black);
+  }
 }
 
 class AppThemeData {
