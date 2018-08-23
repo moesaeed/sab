@@ -128,8 +128,6 @@ class DynamicThemeState extends State<DynamicTheme> {
     _setTextStyle();
   }
 
-  static TextStyle kufiBlack14(Color color) => new SABStyle.kufi(19.0, color);
-
   final Color urgentBG = Color.fromRGBO(255, 41, 41, 1.0);
 
   TextStyle newsDescStyle;
