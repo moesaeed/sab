@@ -152,9 +152,10 @@ class AppOptionsState extends State<AppOptions> {
   TextStyle newsSourceStyle;
   TextStyle newsUrgentStyle;
   TextStyle newsCategoryTitleStyle;
+  TextStyle newsTitleStyle;
 
   void _setTextStyle(bool isArabic) {
-    String fontFamily = isArabic ? "kufi" : "Raleway";
+    String fontFamily = isArabic ? "kufi" : "Roboto";
     newsDateStyle = SABTextStyle(
         color: Color.fromRGBO(147, 148, 149, 1.0), fontFamily: fontFamily);
 
@@ -164,21 +165,36 @@ class AppOptionsState extends State<AppOptions> {
     newsUrgentStyle = SABTextStyle(
         fontSize: 15.0,
         color: _defaultPreferences[1] == AppTheme.Dark.toString()
-            ? Colors.black
+            ? Colors.white
             : Colors.white,
         fontFamily: fontFamily);
 
     newsDescStyle = SABTextStyle(
-        fontSize: 13.0,
-        color: Color.fromRGBO(102, 102, 102, 1.0),
-        fontFamily: fontFamily);
+      fontSize: 16.0,
+      color: _defaultPreferences[1] == AppTheme.Dark.toString()
+          ? Color.fromRGBO(242, 242, 242, 1.0)
+          : Color.fromRGBO(95, 95, 95, 1.0),
+      fontFamily: fontFamily,
+      height: isArabic ? 1.0 : 1.3,
+    );
 
     newsCategoryTitleStyle = SABTextStyle(
-        fontSize: 24.0,
-        color: _defaultPreferences[1] == AppTheme.Dark.toString()
-            ? Colors.white
-            : Colors.black,
-        fontFamily: fontFamily);
+      fontSize: 24.0,
+      color: _defaultPreferences[1] == AppTheme.Dark.toString()
+          ? Colors.white
+          : Colors.black,
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.bold,
+    );
+
+    newsTitleStyle = SABTextStyle(
+      fontSize: isArabic ? 18.0 : 20.0,
+      fontFamily: fontFamily,
+      color: _defaultPreferences[1] == AppTheme.Dark.toString()
+          ? Colors.white
+          : Colors.black,
+      height: isArabic ? 1.0 : 1.1,
+    );
   }
 }
 
